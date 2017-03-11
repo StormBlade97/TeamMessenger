@@ -9,7 +9,7 @@ class UserCreationForm extends React.Component {
         super(props)
     }
 
-    createUser(userDetails) {
+    createUser(userDetails) { //you might as well just send this function as a call back props from its parent. No need to connect everything!
         const {dispatch} = this.props
         dispatch(createUser(userDetails))
     }
