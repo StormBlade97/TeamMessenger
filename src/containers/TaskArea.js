@@ -79,7 +79,7 @@ class TaskArea extends React.Component {
                         }}/>
                     </div>
                 </div>
-                <div className="col-sm-7">
+                <div className="col-sm-8">
                     {!createNewTaskSelected &&
                     <TaskDetailsPanel
                         entity={selectedTask} senderName={selectedTaskSenderName}

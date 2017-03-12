@@ -22,7 +22,10 @@ const initialTaskFilterState = {
 const tasks = (state = initialTaskFilterState, action) => {
 	switch (action.type) {
 		case SET_RECEIVED_SENT_FILTER:
-			return {...state, receivedSentFilter: action.filterValue}
+			{
+                let toggleBool = (state.receivedSentFilter != action.filterValue)
+                return {...state, receivedSentFilter: (toggleBool) ? action.filterValue : SET_RECEIVED_SENT_FILTER.ALL}
+            }
 		case SET_SENDER_GROUP_FILTER:
             return {...state, senderGroupFilter: action.filterValue}
         case SET_RECIPIENT_GROUP_FILTER:

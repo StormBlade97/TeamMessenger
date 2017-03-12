@@ -4,7 +4,7 @@ import {fetchUserItems, displayUserDetails, selectUserDetails} from '../../actio
 import ClickableItemList from '../../components/shared/ClickableItemList'
 import UserDetails from './UserDetails'
 import UserCreationForm from './UserCreationForm'
-import {Panel, FormControl, ListGroupItem} from 'react-bootstrap'
+import {Panel, FormControl, ListGroupItem, Button} from 'react-bootstrap'
 
 class UserManagement extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ class UserManagement extends React.Component {
         }
 
         const {dispatch} = this.props
-        dispatch(fetchUserItems())
+        dispatch(fetchUserItems()) /*remote api call should not be inside constructor. should be in componentDidMount()*/
     }
 
     visibleUsers() {
@@ -28,7 +28,7 @@ class UserManagement extends React.Component {
             Object.values(users).map(user => {
                 if (user.firstName.includes(userByNameFilterValue) ||
                     user.lastName.includes(userByNameFilterValue)) result.push({
-                    name: user.firstName + ' ' + user.lastName,
+                    name: user.firstName + ' ' + user.lastName, /*you can also use this syntax `${variablename} string`*/
                     id: user.id
                 })
             })
@@ -37,7 +37,7 @@ class UserManagement extends React.Component {
         return result
     }
 
-    updateUserByNameFilter(e) {
+    updateUserByNameFilter(e) { //naming scheme is usually 'handle + Eventname' or 'on + Eventname. I suggest you use: handleFilterByUserNameUpdate()
         this.setState({
             userByNameFilterValue: e.target.value
         })
@@ -71,23 +71,25 @@ class UserManagement extends React.Component {
                         }}
                     />
                     <br/>
-                    <ClickableItemList
+                    <ClickableItemList //this can be reused. Thumbs up for arsenii
                         itemList={this.visibleUsers()}
                         onItemSelected={(userId) => {
                             this.onUserItemSelected(userId)
                         }}
                     />
-                    <ListGroupItem
+                    <ListGroupItem //maybe change this to a button?
                         onClick={(e) => {
                             this.onCreateNewUserSelected(e)
-                        }}>
+                        }}
+                        bsStyle="primary"
+                        >
                         Add new user
                     </ListGroupItem>
 
                 </Panel>
-                <div className="col-sm-1"></div>
+                <div className="col-sm-1"></div> {/*what a hack*/}
                 <div className="col-sm-7">
-                    {selectedUserDetails && <UserDetails/>}
+                    {selectedUserDetails && <UserDetails/> || "something"}
                     {selectedCreateNewUser && <UserCreationForm/>}
                 </div>
             </div>
